@@ -95,6 +95,19 @@
 .orb-animation {
   box-shadow: 0 0 40px 10px rgba(160, 120, 255, 0.2);
 }
+.orb-glow {
+  box-shadow: 0 0 40px 10px rgba(160, 120, 255, 0.2);
+}
+.glass-panel {
+  background: rgba(18, 19, 21, 0.4);
+  backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(149, 142, 160, 0.15);
+}
+.timeline-gradient {
+  background: linear-gradient(90deg, rgba(208, 188, 255, 0.05) 0%, rgba(208, 188, 255, 0) 100%);
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .mask-fade {
   mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }

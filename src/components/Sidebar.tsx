@@ -1,91 +1,87 @@
-import { Calendar as CalendarIcon, ListTodo, Search, Settings, Moon, Sun, Activity, SearchIcon } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { cn } from '../lib/utils';
-import { motion } from 'framer-motion';
+import type { ViewMode } from '../types';
 
 export default function Sidebar() {
-  const { theme, setTheme, viewMode, setViewMode, searchQuery, setSearchQuery } = useStore();
+  const { viewMode, setViewMode } = useStore();
 
-  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+  const navItems: { id: ViewMode; label: string; icon: string; subtitle?: string }[] = [
+    { id: 'month', label: 'Workspace', icon: 'grid_view' },
+    { id: 'week', label: 'Network', icon: 'hub' },
+    { id: 'day', label: 'Nodes', icon: 'account_tree' },
+  ];
 
   return (
-    <motion.aside 
-      initial={{ width: 0 }}
-      animate={{ width: 260 }}
-      className="h-full border-r border-border bg-card/80 backdrop-blur-md flex flex-col p-4 shadow-sm z-20"
-    >
-      <div className="flex items-center gap-3 px-2 py-4 mb-6">
-        <div className="h-8 w-8 bg-accent flex items-center justify-center rounded-xl shadow-lg ring-1 ring-white/10">
-          <CalendarIcon className="w-4 h-4 text-white" />
+    <aside className="fixed left-4 top-20 bottom-4 w-64 rounded-2xl bg-[#121315]/40 backdrop-blur-2xl border border-white/5 shadow-2xl flex flex-col h-auto py-6 z-40 hidden lg:flex">
+      {/* Profile Header */}
+      <div className="px-6 mb-8">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-primary-container flex items-center justify-center text-on-primary font-bold text-xs shadow-lg">
+             JD
+          </div>
+          <div>
+            <h3 className="font-mono-technical text-[11px] uppercase tracking-widest text-white leading-none mt-1">
+              Core Terminal
+            </h3>
+            <p className="text-[9px] text-slate-500 font-label tracking-tighter uppercase mt-1">
+              AI Productivity
+            </p>
+          </div>
         </div>
-        <span className="font-semibold text-lg tracking-tight">TimeFlow App</span>
       </div>
 
-      <div className="relative mb-6">
-        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-          <SearchIcon className="h-4 w-4 text-muted-foreground" />
-        </div>
-        <input 
-          type="text" 
-          placeholder="Search items..." 
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-9 pr-4 py-2 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-all"
-        />
-      </div>
+      {/* Navigation */}
+      <nav className="flex-1 flex flex-col px-4 gap-1">
+        {navItems.map(item => {
+          const isActive = viewMode === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setViewMode(item.id)}
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300",
+                isActive 
+                  ? "bg-violet-500/10 text-violet-300 border-r-2 border-violet-500 shadow-[inset_2px_0_10px_rgba(139,92,246,0.1)]" 
+                  : "text-slate-500 hover:text-white hover:bg-white/5"
+              )}
+            >
+              <span className="material-symbols-outlined text-lg">{item.icon}</span>
+              <span className="font-mono-technical text-[11px] uppercase tracking-widest">{item.label}</span>
+            </button>
+          )
+        })}
 
-      <nav className="flex-1 space-y-2">
-        <div className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Views</div>
-        
-        <SidebarItem 
-          icon={<CalendarIcon className="w-4 h-4" />} 
-          label="Detailed Calendar" 
-          active={viewMode !== 'focus' && viewMode !== 'day'}
-          onClick={() => setViewMode('month')}
-        />
-        <SidebarItem 
-          icon={<ListTodo className="w-4 h-4" />} 
-          label="Today's Overview" 
-          active={viewMode === 'day'}
-          onClick={() => setViewMode('day')}
-        />
-         <SidebarItem 
-          icon={<Activity className="w-4 h-4" />} 
-          label="Hyper Focus" 
-          active={viewMode === 'focus'}
+        <button
           onClick={() => setViewMode('focus')}
-        />
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-300 group"
+        >
+          <span className="material-symbols-outlined text-lg group-hover:text-primary transition-colors">psychology</span>
+          <span className="font-mono-technical text-[11px] uppercase tracking-widest group-hover:text-primary transition-colors">Intelligence</span>
+        </button>
+        
+        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-300">
+          <span className="material-symbols-outlined text-lg">inventory_2</span>
+          <span className="font-mono-technical text-[11px] uppercase tracking-widest">Archive</span>
+        </button>
       </nav>
 
-      <div className="pt-4 mt-4 border-t border-border flex flex-col gap-2">
-        <SidebarItem 
-          icon={theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} 
-          label={theme === 'dark' ? 'Light Mode' : 'Dark Mode'} 
-          onClick={toggleTheme}
-        />
-        <SidebarItem 
-          icon={<Settings className="w-4 h-4" />} 
-          label="Settings" 
-          onClick={() => {}}
-        />
+      {/* Footer Actions */}
+      <div className="px-4 mt-auto space-y-4">
+        <button className="w-full py-3 rounded-xl bg-gradient-to-r from-primary/20 to-primary-container/20 border border-primary/30 text-primary text-[10px] font-mono-technical uppercase tracking-[0.2em] hover:bg-primary/30 hover:shadow-[0_0_15px_rgba(208,188,255,0.2)] transition-all">
+          New Logic
+        </button>
+        
+        <div className="flex flex-col gap-1">
+          <button className="w-full flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-white transition-all">
+            <span className="material-symbols-outlined text-sm">help</span>
+            <span className="font-mono-technical text-[10px] uppercase tracking-widest">Help</span>
+          </button>
+          <button className="w-full flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-error transition-all hover:bg-error/10 rounded-lg">
+            <span className="material-symbols-outlined text-sm">logout</span>
+            <span className="font-mono-technical text-[10px] uppercase tracking-widest">Logout</span>
+          </button>
+        </div>
       </div>
-    </motion.aside>
+    </aside>
   );
-}
-
-function SidebarItem({ icon, label, active, onClick }: { icon: React.ReactNode, label: string, active?: boolean, onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
-        active 
-          ? "bg-accent/10 text-accent" 
-          : "text-muted-foreground hover:bg-muted hover:text-foreground"
-      )}
-    >
-      {icon}
-      {label}
-    </button>
-  )
 }
