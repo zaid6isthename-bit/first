@@ -1,7 +1,4 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useStore } from '../store/useStore';
-import { cn } from '../lib/utils';
 import { isToday, parseISO } from 'date-fns';
 
 export default function FocusView() {

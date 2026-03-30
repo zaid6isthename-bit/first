@@ -1,11 +1,10 @@
 import { useStore } from '../store/useStore';
 import { format, parseISO, isSameDay, addHours, startOfDay, addDays, subDays } from 'date-fns';
-import { cn } from '../lib/utils';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function DayView() {
-  const { viewMode, currentDate, setCurrentDate, events, searchQuery } = useStore();
+  const { currentDate, setCurrentDate, events, searchQuery } = useStore();
 
   const prevDay = () => setCurrentDate(subDays(parseISO(currentDate), 1).toISOString());
   const nextDay = () => setCurrentDate(addDays(parseISO(currentDate), 1).toISOString());
