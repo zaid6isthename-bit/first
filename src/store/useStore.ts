@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { AppState, CalendarEvent, Task, ViewMode } from '../types';
+import type { AppState, CalendarEvent, Task, ViewMode } from '../types';
 import { addDays, startOfToday, subDays, addHours } from 'date-fns';
 
 const today = startOfToday().toISOString();

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..700&amp;family=Space+Grotesk:wght@300..700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @font-face {
+      font-family: 'Berkeley Mono';
+      src: url('https://fonts.cdnfonts.com/s/95856/BerkeleyMono-Regular.woff') format('woff');
+    }
+    body {
+      background-color: #121315;
+      color: #e3e2e3;
+      overflow-x: hidden;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-panel {
+      background: rgba(18, 19, 21, 0.4);
+      backdrop-filter: blur(20px);
+      border: 0.5px solid rgba(149, 142, 160, 0.15);
+    }
+    .timeline-gradient {
+      background: linear-gradient(90deg, rgba(208, 188, 255, 0.05) 0%, rgba(208, 188, 255, 0) 100%);
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .orb-glow {
+      box-shadow: 0 0 40px 10px rgba(160, 120, 255, 0.2);
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-tint": "#d0bcff",
+            "background": "#121315",
+            "error": "#ffb4ab",
+            "primary-fixed-dim": "#d0bcff",
+            "on-surface": "#e3e2e3",
+            "on-secondary": "#2f3300",
+            "on-primary-fixed": "#23005c",
+            "primary": "#d0bcff",
+            "surface-dim": "#121315",
+            "on-background": "#e3e2e3",
+            "inverse-on-surface": "#303032",
+            "surface-container-low": "#1b1c1d",
+            "surface-container-high": "#292a2b",
+            "on-surface-variant": "#cbc3d7",
+            "outline": "#958ea0",
+            "on-secondary-container": "#5d6400",
+            "error-container": "#93000a",
+            "tertiary-container": "#f55e5d",
+            "tertiary-fixed": "#ffdad7",
+            "surface-container-lowest": "#0d0e0f",
+            "on-tertiary": "#68000e",
+            "surface-container": "#1f2021",
+            "on-primary": "#3c0091",
+            "outline-variant": "#494454",
+            "secondary-fixed-dim": "#c3d000",
+            "on-error-container": "#ffdad6",
+            "secondary-fixed": "#dfed1a",
+            "on-secondary-fixed-variant": "#454a00",
+            "tertiary-fixed-dim": "#ffb3af",
+            "on-tertiary-fixed-variant": "#8e101c",
+            "tertiary": "#ffb3af",
+            "on-primary-fixed-variant": "#5516be",
+            "surface-container-highest": "#343536",
+            "primary-fixed": "#e9ddff",
+            "inverse-primary": "#6d3bd7",
+            "secondary-container": "#d7e404",
+            "secondary": "#f5ff7d",
+            "on-tertiary-fixed": "#410005",
+            "primary-container": "#a078ff",
+            "on-primary-container": "#340080",
+            "surface": "#121315",
+            "on-error": "#690005",
+            "inverse-surface": "#e3e2e3",
+            "surface-bright": "#38393a",
+            "on-secondary-fixed": "#1b1d00",
+            "on-tertiary-container": "#5c000b",
+            "surface-variant": "#343536"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Space Grotesk"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-body selection:bg-primary/30">
+<!-- TopNavBar (The Command Palette) -->
+<header class="fixed top-0 w-full z-50 bg-[#121315]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] flex items-center justify-between px-6 py-3 w-full">
+<div class="flex items-center gap-6">
+<span class="text-xl font-bold tracking-tighter bg-gradient-to-br from-violet-300 to-violet-600 bg-clip-text text-transparent">Aether OS</span>
+<div class="hidden md:flex items-center bg-white/5 rounded-full px-4 py-1.5 border border-white/5 group transition-all duration-300 hover:border-white/20">
+<span class="material-symbols-outlined text-slate-400 text-sm mr-2">search</span>
+<input class="bg-transparent border-none outline-none text-sm w-64 font-label tracking-wide placeholder:text-slate-500 focus:ring-0" placeholder="Jump to date, event, or task... (⌘K)" type="text"/>
+</div>
+</div>
+<nav class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:bg-white/5 transition-all duration-300 rounded-lg">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-slate-400 hover:bg-white/5 transition-all duration-300 rounded-lg">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</nav>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-4 top-20 bottom-4 w-64 rounded-2xl bg-[#121315]/40 backdrop-blur-2xl border border-white/5 shadow-2xl flex flex-col h-full py-6 z-40 hidden lg:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-primary-container flex items-center justify-center text-on-primary font-bold text-xs shadow-lg">JD</div>
+<div>
+<h3 class="font-['Berkeley_Mono'] text-[11px] uppercase tracking-widest text-white leading-none">Core Terminal</h3>
+<p class="text-[9px] text-slate-500 tracking-tighter uppercase mt-1">AI Productivity</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col px-4 gap-1">
+<!-- Workspace Active -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-violet-500/10 text-violet-300 border-r-2 border-violet-500 transition-transform duration-500 cubic-bezier(0.16,1,0.3,1)" href="#">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+<span class="font-['Berkeley_Mono'] text-[11px] uppercase tracking-widest">Workspace</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg">psychology</span>
+<span class="font-['Berkeley_Mono'] text-[11px] uppercase tracking-widest">Intelligence</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+<span class="font-['Berkeley_Mono'] text-[11px] uppercase tracking-widest">Archive</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg">hub</span>
+<span class="font-['Berkeley_Mono'] text-[11px] uppercase tracking-widest">Network</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-lg">account_tree</span>
+<span class="font-['Berkeley_Mono'] text-[11px] uppercase tracking-widest">Nodes</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full py-3 rounded-xl bg-gradient-to-r from-primary/20 to-primary-container/20 border border-primary/30 text-primary text-[10px] font-['Berkeley_Mono'] uppercase tracking-[0.2em] hover:bg-primary/30 transition-all">
+        New Logic
+      </button>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+<span class="font-['Berkeley_Mono'] text-[10px] uppercase tracking-widest">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span class="font-['Berkeley_Mono'] text-[10px] uppercase tracking-widest">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Canvas (Time Map) -->
+<main class="pt-20 lg:pl-72 min-h-screen relative overflow-hidden">
+<!-- Background Texture -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0); background-size: 40px 40px;"></div>
+<!-- Timeline Header Controls -->
+<div class="relative z-10 px-8 py-6 flex items-end justify-between">
+<div>
+<h1 class="text-4xl font-extralight tracking-tight text-white mb-2">October <span class="text-primary/60">2024</span></h1>
+<div class="flex gap-4">
+<span class="text-[10px] font-['Berkeley_Mono'] uppercase tracking-[0.2em] text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Live Sync Active</span>
+<span class="text-[10px] font-['Berkeley_Mono'] uppercase tracking-[0.2em] text-slate-500">12 Scheduled Events</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-white/5 p-1 rounded-xl border border-white/5">
+<button class="px-4 py-2 text-[10px] font-['Berkeley_Mono'] uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Year</button>
+<button class="px-4 py-2 text-[10px] font-['Berkeley_Mono'] uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Month</button>
+<button class="px-4 py-2 text-[10px] font-['Berkeley_Mono'] uppercase tracking-widest text-white bg-white/10 rounded-lg shadow-sm">Week</button>
+<button class="px-4 py-2 text-[10px] font-['Berkeley_Mono'] uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Day</button>
+</div>
+</div>
+<!-- The Infinite Scroll Timeline -->
+<div class="relative w-full h-[614px] mt-4 overflow-x-auto no-scrollbar cursor-crosshair group">
+<!-- Heatmap Overlay -->
+<div class="absolute inset-0 pointer-events-none opacity-30 blur-3xl overflow-hidden">
+<div class="absolute top-1/4 left-1/4 w-[400px] h-[200px] bg-primary rounded-full mix-blend-screen animate-pulse"></div>
+<div class="absolute top-1/2 left-[60%] w-[300px] h-[150px] bg-secondary rounded-full mix-blend-screen opacity-20"></div>
+<div class="absolute top-1/3 left-[85%] w-[500px] h-[300px] bg-tertiary-container rounded-full mix-blend-screen opacity-30"></div>
+</div>
+<!-- Time Markers & Grid -->
+<div class="absolute top-0 left-0 h-full flex" style="width: 3000px;">
+<!-- Day Markers -->
+<div class="absolute top-0 w-full h-full flex justify-between px-10">
+<div class="h-full w-[0.5px] bg-white/5 relative">
+<span class="absolute top-2 left-2 font-['Berkeley_Mono'] text-[9px] text-slate-600 uppercase">Mon 14</span>
+</div>
+<div class="h-full w-[0.5px] bg-white/5 relative">
+<span class="absolute top-2 left-2 font-['Berkeley_Mono'] text-[9px] text-slate-600 uppercase">Tue 15</span>
+</div>
+<div class="h-full w-[1px] bg-primary/20 relative shadow-[0_0_10px_rgba(208,188,255,0.3)]">
+<span class="absolute top-2 left-2 font-['Berkeley_Mono'] text-[9px] text-primary uppercase font-bold">Today</span>
+<div class="absolute top-0 left-0 w-full h-full bg-primary/5"></div>
+</div>
+<div class="h-full w-[0.5px] bg-white/5 relative">
+<span class="absolute top-2 left-2 font-['Berkeley_Mono'] text-[9px] text-slate-600 uppercase">Thu 17</span>
+</div>
+<div class="h-full w-[0.5px] bg-white/5 relative">
+<span class="absolute top-2 left-2 font-['Berkeley_Mono'] text-[9px] text-slate-600 uppercase">Fri 18</span>
+</div>
+<div class="h-full w-[0.5px] bg-white/5 relative">
+<span class="absolute top-2 left-2 font-['Berkeley_Mono'] text-[9px] text-slate-600 uppercase">Sat 19</span>
+</div>
+</div>
+<!-- Event Cards Container -->
+<div class="relative w-full h-full py-20 px-10">
+<!-- Event 1 -->
+<div class="absolute top-10 left-[450px] w-64 glass-panel rounded-2xl p-5 group/card transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-0.5 rounded text-[8px] font-['Berkeley_Mono'] uppercase tracking-widest bg-primary/20 text-primary border border-primary/30">Strategic Sync</span>
+<span class="text-[9px] text-slate-400 font-['Berkeley_Mono']">09:00 — 10:30</span>
+</div>
+<h4 class="text-white text-lg font-light leading-snug mb-3">AI Engine Architecture Review</h4>
+<div class="flex -space-x-2 mb-4">
+<img class="w-6 h-6 rounded-full border-2 border-background" data-alt="close-up portrait of professional woman with neutral expression in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRjvnSuFmj_ZDRwXK_qmISNK_46ih74L8wo8rLWWppzz7fQnP9gyuPmym0Ti_mnsbP2bodRhg7I3_185Pg0Db3i-JW6s-ii1HYfuRHKunDMK3CeUfRn3L1hKmE-qqbxWtqUKn_QDl_dhouDxFqKyKnxiMfc1CUQU1KcO-V9ofTkbkDBJYEjRdS4ZaWFe7axcfazp9y_vObesJbkId0fIEkR0vLRqHvYODlzXzVmLCso70W1UwSYBTLLb9Cj2DtzijvzYtpa8C4L6E"/>
+<img class="w-6 h-6 rounded-full border-2 border-background" data-alt="portrait of a creative man with beard looking thoughtfully at the camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7y7wX2AWZHl5UDBEgExjBEycLF1TJPLTtXXK6lSf5uXOIaTU908w4akFd0HljQ2e21geUM0tEdzd8Gil-VvBI0r3CIFFHKWtpcfrBlgfvS8RJ9iSav9JHSlD36W_Yp4znVWC8hqBvOgl9oWUh9bATOa6RozaVE0Zu4IP70_4-NL0xjgA-vMMOlPr1_EPd2fkYLWe7iYFBvFLrGWt9CcZqAzo24OBHAevcQG9Lp3KVzKAv9vgK52_02U2_ObrPhjOyQ9XQN_JOejQ"/>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border-2 border-background flex items-center justify-center text-[8px] text-slate-400">+3</div>
+</div>
+<button class="w-full py-2 rounded-lg bg-white/5 text-[9px] font-['Berkeley_Mono'] uppercase tracking-widest text-slate-300 hover:bg-white/10 transition-colors">Join Huddle</button>
+</div>
+<!-- Event 2 (Large Image Card) -->
+<div class="absolute top-48 left-[800px] w-80 glass-panel rounded-2xl overflow-hidden group/card transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+<div class="h-32 w-full relative">
+<img class="w-full h-full object-cover opacity-60" data-alt="abstract digital connection lines and data nodes glowing in deep space aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8N7CLJPbRpX14ynH4JBEE94QgQX-6AB5f9GHo5RlmitXbEqFPeh0yr6IN1fXfmXeTYELaepE1nQEtJ7tdfiR2vZDU5-8th6ovfa8ssfNdbzZpIu1CQC6UFuZux964SyO-5IzRbnY0ErH4wGEv-Ek7uhUuAHIIptMwtuinkmhGIuEdANK1c1Iy2vF97Ohs7sjUgzA8uFt5INlOeGkfbFClMHCmozdjcZsWI8H1fqLq54bR7rd894WUI5fc29uuyBLBcMGy_zjb2Ts"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
+</div>
+<div class="p-5 relative -mt-8">
+<span class="px-2 py-0.5 rounded text-[8px] font-['Berkeley_Mono'] uppercase tracking-widest bg-secondary/20 text-secondary border border-secondary/30">Deep Work</span>
+<h4 class="text-white text-lg font-light leading-snug mt-2 mb-1">Neural Network Training</h4>
+<p class="text-[10px] text-slate-500 font-label tracking-wide mb-4">Block reserved for Aether OS core optimizations. Do not disturb.</p>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm text-slate-500">lock</span>
+<span class="text-[9px] text-slate-500 font-['Berkeley_Mono']">2 Hours Remaining</span>
+</div>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="absolute top-24 left-[1300px] w-56 glass-panel rounded-2xl p-5 group/card transition-all duration-500 hover:-translate-y-2">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-0.5 rounded text-[8px] font-['Berkeley_Mono'] uppercase tracking-widest bg-error/20 text-error border border-error/30">Critical</span>
+<span class="text-[9px] text-slate-400 font-['Berkeley_Mono']">14:00</span>
+</div>
+<h4 class="text-white text-md font-medium leading-snug">Client Board Presentation</h4>
+<div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-error w-3/4 shadow-[0_0_8px_rgba(255,180,171,0.5)]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats / Bento Footer Section -->
+<div class="px-8 mt-12 mb-20">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="glass-panel p-6 rounded-3xl col-span-2">
+<h5 class="text-[10px] font-['Berkeley_Mono'] uppercase tracking-[0.2em] text-slate-500 mb-4">Focus Distribution</h5>
+<div class="flex items-end gap-2 h-32">
+<div class="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40" style="height: 60%"></div>
+<div class="flex-1 bg-primary/40 rounded-t-lg transition-all hover:bg-primary/60" style="height: 85%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40" style="height: 40%"></div>
+<div class="flex-1 bg-primary/60 rounded-t-lg transition-all hover:bg-primary/80" style="height: 95%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40" style="height: 55%"></div>
+<div class="flex-1 bg-secondary/30 rounded-t-lg transition-all hover:bg-secondary/50" style="height: 30%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40" style="height: 45%"></div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-3xl">
+<h5 class="text-[10px] font-['Berkeley_Mono'] uppercase tracking-[0.2em] text-slate-500 mb-4">Time Gained</h5>
+<div class="flex flex-col items-center justify-center h-full pb-4">
+<span class="text-4xl font-extralight text-primary">+12.4h</span>
+<span class="text-[9px] font-['Berkeley_Mono'] text-slate-400 mt-2">v.s last week</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-3xl">
+<h5 class="text-[10px] font-['Berkeley_Mono'] uppercase tracking-[0.2em] text-slate-500 mb-4">System Load</h5>
+<div class="relative w-24 h-24 mx-auto mt-2">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"></path>
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#gradient)" stroke-dasharray="75, 100" stroke-width="2"></path>
+<defs>
+<lineargradient id="gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" style="stop-color:#d0bcff"></stop>
+<stop offset="100%" style="stop-color:#a078ff"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center text-[10px] font-['Berkeley_Mono'] text-white">75%</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Jarvis-style AI Orb -->
+<div class="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-4">
+<!-- Contextual Tooltip -->
+<div class="glass-panel px-4 py-3 rounded-2xl border-primary/20 mb-2 opacity-0 translate-y-4 hover:opacity-100 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 cursor-default">
+<p class="text-[10px] font-['Berkeley_Mono'] text-primary mb-1 uppercase tracking-tighter">Aether Intelligence</p>
+<p class="text-xs text-slate-300 font-label italic">"You have a 2-hour gap between 11:00 and 13:00. Would you like me to schedule deep work?"</p>
+</div>
+<div class="relative group cursor-pointer">
+<!-- The Orb -->
+<div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-container orb-glow flex items-center justify-center relative overflow-hidden transition-transform duration-500 hover:scale-110">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.4),transparent)] animate-pulse"></div>
+<span class="material-symbols-outlined text-on-primary text-2xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<!-- Ripple Rings -->
+<div class="absolute -inset-2 rounded-full border border-primary/20 animate-[ping_3s_linear_infinite]"></div>
+<div class="absolute -inset-4 rounded-full border border-primary/10 animate-[ping_4s_linear_infinite]"></div>
+</div>
+</div>
+</body></html>
